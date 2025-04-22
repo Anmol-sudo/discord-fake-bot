@@ -16,16 +16,21 @@ const client = new Client({
 // 🔇 Silent audio loop function
 function playSilentLoop(connection) {
   const player = createAudioPlayer();
-  const resource = createAudioResource(
-    fs.createReadStream(path.join(__dirname, "silence.mp3")),
-    { inputType: StreamType.Arbitrary }
-  );
 
+  function createResource() {
+    return createAudioResource(
+      fs.createReadStream(path.join(__dirname, "silence.mp3")),
+      { inputType: StreamType.Arbitrary }
+    );
+  }
+
+  let resource = createResource();
   player.play(resource);
   connection.subscribe(player);
 
   player.on("idle", () => {
-    player.play(resource); // Loop forever
+    resource = createResource(); // Create a new resource each time
+    player.play(resource);
   });
 
   console.log("Started silent audio loop.");

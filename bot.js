@@ -19,7 +19,7 @@ function playSilentLoop(connection) {
 
   function createResource() {
     return createAudioResource(
-      fs.createReadStream(path.join(__dirname, "silence.mp3")),
+      fs.createReadStream(path.join(__dirname, "weeknd-hip-hop-radio.m4a")),
       { inputType: StreamType.Arbitrary }
     );
   }
